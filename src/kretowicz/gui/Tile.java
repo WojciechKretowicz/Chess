@@ -1,9 +1,7 @@
 package kretowicz.gui;
 
-import kretowicz.Monitor.Monitor;
 import kretowicz.engine.Engine;
 import kretowicz.figures.Figure;
-import kretowicz.figures.King;
 
 import javax.swing.*;
 import java.awt.*;
