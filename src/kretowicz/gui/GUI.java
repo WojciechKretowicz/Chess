@@ -28,7 +28,6 @@ public class GUI {
 
     public void show() {
         frame.setVisible(true);
-        frame.revalidate();
     }
 
     public Chessboard getChessboard() {

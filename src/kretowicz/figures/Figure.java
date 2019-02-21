@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -42,6 +43,60 @@ public abstract class Figure {
             e.printStackTrace();
         }
 
+        Figure tmp = this;
+        picture.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+                //System.out.println(e.getX() + " " + e.getY());
+                chessboard.setMovingFigure(tmp,e.getXOnScreen() - 710,e.getYOnScreen() - 110);
+                picture.setVisible(false);
+                chessboard.repaint();
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+            }
+        });
+
+        picture.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //System.out.println(tile.getMonitor().getLastTile().getXPos() + " " + tile.getMonitor().getLastTile().getYPos());
+
+                if(check(tile.getMonitor().getLastTile())){
+                    int d = color ? -1 : 1;
+                    tile.setFigure(null);
+                    chessboard.getTile(tile.getXPos()+d,tile.getYPos()).setFigure(tmp);
+                }
+
+                picture.setVisible(true);
+
+                chessboard.setMovingFigure(null,0,0);
+                chessboard.repaint();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
     }
 
@@ -51,5 +106,9 @@ public abstract class Figure {
 
     public void setTile(Tile tile) {
         this.tile = tile;
+    }
+
+    public boolean check(Tile lastTile) {
+        return false;
     }
 }

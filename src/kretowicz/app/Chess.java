@@ -21,5 +21,13 @@ public class Chess {
 
         Pawn pawn = engine.getWhitePawns()[3];
         pawn.moveForwardLong();
+
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(gui.getChessboard().monitor.getLastTile().getXPos() + " " + gui.getChessboard().monitor.getLastTile().getYPos());
     }
 }

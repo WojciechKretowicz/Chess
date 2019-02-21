@@ -16,29 +16,22 @@ import java.io.IOException;
 
 public class Pawn extends Figure {
     public Pawn(boolean color, Chessboard chessboard) {
-            super(color, chessboard);
+        super(color, chessboard);
+    }
 
-            Pawn tmp =this;
-            picture.addMouseMotionListener(new MouseMotionListener() {
-                @Override
-                public void mouseDragged(MouseEvent e) {
-                    System.out.println(e.getX() + " " + e.getY());
-                    chessboard.setMovingFigure(tmp,e.getXOnScreen() - 710,e.getYOnScreen() - 110);
-
-                    chessboard.repaint();
-                }
-
-                @Override
-                public void mouseMoved(MouseEvent e) {
-
-                }
-            });
-        }
+    @Override
+    public boolean check(Tile lastTile) {
+        int d = color ? -1 : 1;
+        if(tile.getXPos() == lastTile.getXPos() - d)
+            return true;
+        return false;
+    }
 
     public void moveForward() {
         int d=1;
         if(color)
             d=-1;
+
         tile.setFigure(null);
         chessboard.getTile(tile.getXPos()+d,tile.getYPos()).setFigure(this);
     }
