@@ -26,17 +26,12 @@ public class Engine {
     private Queen blackQueen;
 
     private boolean turn;
-    private boolean firstWhiteTurn;
-    private boolean firstBlackTurn;
 
     private Tile lastTile;
 
 
     public Engine() {
         turn = true;
-        firstWhiteTurn = true;
-        firstBlackTurn = true;
-
     }
 
     public void setChessboard(Chessboard chessboard) {
@@ -180,19 +175,4 @@ public class Engine {
         this.lastTile = lastTile;
     }
 
-    public boolean getFirstWhiteTurn() {
-        return this.firstWhiteTurn;
-    }
-
-    public void negateFirstWhiteTurn() {
-        firstWhiteTurn = false;
-    }
-
-    public boolean getFirstBlackTurn() {
-        return this.firstBlackTurn;
-    }
-
-    public void negateFirstBlackTurn() {
-        firstBlackTurn = false;
-    }
 }

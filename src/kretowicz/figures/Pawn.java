@@ -2,62 +2,71 @@ package kretowicz.figures;
 
 import kretowicz.engine.Engine;
 import kretowicz.gui.Chessboard;
-import kretowicz.gui.Tile;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Pawn extends Figure {
+
+    private boolean firstMove;
+
     public Pawn(boolean color, Chessboard chessboard, Engine engine) {
         super(color, chessboard,engine);
+        firstMove = true;
     }
 
     @Override
-    public boolean check(Tile lastTile) {
-        return moveForward(lastTile) ||
-                moveForwardLong(lastTile);
+    public boolean check() {
+        boolean result =
+                moveForward() ||
+                moveForwardLong() ||
+                moveForwardRight() ||
+                moveForwardLeft();
+
+        if(result)
+            firstMove = false;
+        return result;
     }
 
-    public boolean moveForward(Tile lastTile) {
+    public boolean moveForward() {
         int d = color ? -1 : 1;
-        if(tile.getXPos() == lastTile.getXPos() - d)
+        if(tile.getXPos() == engine.getLastTile().getXPos() - d && tile.getYPos() == engine.getLastTile().getYPos() &&
+                engine.getLastTile().getFigure() == null)
             return true;
         return false;
     }
 
-    public boolean moveForwardLong(Tile lastTile) {
-        int d = color ? -2 : 2;
-        if(engine.getTurn() == color && tile.getXPos() == lastTile.getXPos() - d) {
-            if(engine.getTurn() && engine.getFirstWhiteTurn())
-                return true;
-            else if(!engine.getTurn() && engine.getFirstBlackTurn())
-                return true;
+    public boolean moveForwardLong() {
+        int d = color ? -1 : 1;
+
+        if(!firstMove)
+            return false;
+
+        if(chessboard.getTile(tile.getXPos() + d, tile.getYPos()).getFigure() != null)
+            return false;
+
+        if(chessboard.getTile(tile.getXPos() + 2*d, tile.getYPos()).getFigure() != null)
+            return false;
+
+        if(engine.getTurn() == color && tile.getXPos() == engine.getLastTile().getXPos() - 2*d && tile.getYPos() == engine.getLastTile().getYPos()) {
+            return true;
         }
         return false;
     }
 
-    public void moveForwardRight() {
-        int d=1;
-        if(color)
-            d=-1;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()-d).setFigure(this);
+    public boolean moveForwardRight() {
+        int d = color ? -1 : 1;
+        if(tile.getXPos() == engine.getLastTile().getXPos() - d && tile.getYPos() == engine.getLastTile().getYPos() + d &&
+                engine.getLastTile().getFigure()!= null) {
+            return true;
+        }
+        return false;
     }
 
-    public void moveForwardLeft() {
-        int d=1;
-        if(color)
-            d=-1;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()+d).setFigure(this);
+    public boolean moveForwardLeft() {
+        int d = color ? -1 : 1;
+        if(tile.getXPos() == engine.getLastTile().getXPos() - d && tile.getYPos() == engine.getLastTile().getYPos() - d &&
+                engine.getLastTile().getFigure()!= null)
+            return true;
+        return false;
     }
 
 

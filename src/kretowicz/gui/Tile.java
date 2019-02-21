@@ -62,12 +62,13 @@ public class Tile extends JPanel {
 
     public void setFigure(Figure figure) {
 
+        if(this.figure != null)
+            remove(this.figure.getPicture());
+
         if(figure != null) {
             add(figure.getPicture());
             figure.setTile(this);
         }
-        else
-            remove(this.figure.getPicture());
 
         this.figure = figure;
         repaint();

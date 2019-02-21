@@ -79,17 +79,13 @@ public abstract class Figure {
             public void mouseReleased(MouseEvent e) {
                 //System.out.println(tile.getMonitor().getLastTile().getXPos() + " " + tile.getMonitor().getLastTile().getYPos());
 
-                if(engine.getTurn() == color && check(engine.getLastTile())){
+                if(engine.getTurn() == color && check()){
                     int d = color ? -1 : 1;
                     tile.setFigure(null);
                     engine.getLastTile().setFigure(tmp);
 
                     engine.changeTurn();
 
-                    if(color)
-                        engine.negateFirstWhiteTurn();
-                    else
-                        engine.negateFirstBlackTurn();
                 }
 
                 picture.setVisible(true);
@@ -119,7 +115,7 @@ public abstract class Figure {
         this.tile = tile;
     }
 
-    public boolean check(Tile lastTile) {
+    public boolean check() {
         return false;
     }
 }
