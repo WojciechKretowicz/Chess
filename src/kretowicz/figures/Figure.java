@@ -6,12 +6,15 @@ import kretowicz.gui.Tile;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public abstract class Figure {
     protected JLabel picture;
+    public Image img;
     protected boolean color;
     protected Tile tile;
     protected Chessboard chessboard;
@@ -33,9 +36,13 @@ public abstract class Figure {
                     Image.SCALE_SMOOTH);
             picture.setIcon(new ImageIcon(scaledPic));
 
+            img = scaledPic;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
     public JLabel getPicture() {

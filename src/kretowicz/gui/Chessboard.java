@@ -1,6 +1,9 @@
 package kretowicz.gui;
 
 
+import kretowicz.figures.Figure;
+import kretowicz.figures.King;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,6 +11,9 @@ public class Chessboard extends JPanel {
     private Tile [][] tiles;
     private Dimension screenSize;
     private JPanel margin;
+
+    private Figure movingFigure;
+    int x,y;
 
     public Chessboard(Dimension screenSize) {
 
@@ -31,5 +37,20 @@ public class Chessboard extends JPanel {
 
     public Tile getTile(int i, int j) {
         return tiles[i][j];
+    }
+
+    public void setMovingFigure(Figure figure, int x, int y) {
+        this.movingFigure = figure;
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        if(movingFigure != null) {
+            g.drawImage(movingFigure.img, x , y, null);
+        }
     }
 }
