@@ -1,5 +1,6 @@
 package kretowicz.figures;
 
+import kretowicz.engine.Engine;
 import kretowicz.gui.Chessboard;
 
 import javax.imageio.ImageIO;
@@ -10,8 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class Rook extends Figure {
-    public Rook(boolean color, Chessboard chessboard) {
-        super(color, chessboard);
+    public Rook(boolean color, Chessboard chessboard, Engine engine) {
+        super(color, chessboard, engine);
 
     }
 

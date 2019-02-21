@@ -1,6 +1,7 @@
 package kretowicz.gui;
 
 import kretowicz.Monitor.Monitor;
+import kretowicz.engine.Engine;
 import kretowicz.figures.Figure;
 import kretowicz.figures.King;
 
@@ -14,14 +15,14 @@ public class Tile extends JPanel {
     private Color color;
     private int x,y;
 
-    private Monitor monitor;
+    private Engine engine;
 
-    public Tile(Color color, int x,int y, Monitor monitor) {
+    public Tile(Color color, int x,int y, Engine engine) {
         this.color = color;
         this.x = x;
         this.y = y;
 
-        this.monitor = monitor;
+        this.engine = engine;
 
         setBackground(color);
 
@@ -49,7 +50,7 @@ public class Tile extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                monitor.setLastTile(tmp);
+                engine.setLastTile(tmp);
             }
 
             @Override
@@ -92,7 +93,7 @@ public class Tile extends JPanel {
         return y;
     }
 
-    public Monitor getMonitor() {
-        return monitor;
+    public Engine getEngine() {
+        return engine;
     }
 }

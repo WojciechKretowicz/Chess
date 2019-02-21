@@ -1,5 +1,6 @@
 package kretowicz.figures;
 
+import kretowicz.engine.Engine;
 import kretowicz.gui.Chessboard;
 import kretowicz.gui.Tile;
 
@@ -15,33 +16,32 @@ import java.io.File;
 import java.io.IOException;
 
 public class Pawn extends Figure {
-    public Pawn(boolean color, Chessboard chessboard) {
-        super(color, chessboard);
+    public Pawn(boolean color, Chessboard chessboard, Engine engine) {
+        super(color, chessboard,engine);
     }
 
     @Override
     public boolean check(Tile lastTile) {
+        return moveForward(lastTile) ||
+                moveForwardLong(lastTile);
+    }
+
+    public boolean moveForward(Tile lastTile) {
         int d = color ? -1 : 1;
         if(tile.getXPos() == lastTile.getXPos() - d)
             return true;
         return false;
     }
 
-    public void moveForward() {
-        int d=1;
-        if(color)
-            d=-1;
-
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()).setFigure(this);
-    }
-
-    public void moveForwardLong() {
-        int d=2;
-        if(color)
-            d=-2;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()).setFigure(this);
+    public boolean moveForwardLong(Tile lastTile) {
+        int d = color ? -2 : 2;
+        if(engine.getTurn() == color && tile.getXPos() == lastTile.getXPos() - d) {
+            if(engine.getTurn() && engine.getFirstWhiteTurn())
+                return true;
+            else if(!engine.getTurn() && engine.getFirstBlackTurn())
+                return true;
+        }
+        return false;
     }
 
     public void moveForwardRight() {

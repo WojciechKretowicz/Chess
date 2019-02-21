@@ -2,6 +2,7 @@ package kretowicz.gui;
 
 
 import kretowicz.Monitor.Monitor;
+import kretowicz.engine.Engine;
 import kretowicz.figures.Figure;
 import kretowicz.figures.King;
 
@@ -11,14 +12,11 @@ import java.awt.*;
 public class Chessboard extends JPanel {
     private Tile [][] tiles;
     private Dimension screenSize;
-    public Monitor monitor;
 
     private Figure movingFigure;
     int x,y;
 
-    public Chessboard(Dimension screenSize) {
-
-        monitor = new Monitor();
+    public Chessboard(Dimension screenSize, Engine engine) {
 
         setMaximumSize(new Dimension(screenSize.width/2, screenSize.width/2));
 
@@ -30,9 +28,9 @@ public class Chessboard extends JPanel {
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((i + j) % 2 == 0)
-                    tiles[i][j] = new Tile(Color.WHITE, i, j, monitor);
+                    tiles[i][j] = new Tile(Color.WHITE, i, j, engine);
                 else
-                    tiles[i][j] = new Tile(Color.gray, i, j, monitor);
+                    tiles[i][j] = new Tile(Color.gray, i, j, engine);
                 add(tiles[i][j]);
             }
         }

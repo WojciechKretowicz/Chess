@@ -1,5 +1,6 @@
 package kretowicz.figures;
 
+import kretowicz.engine.Engine;
 import kretowicz.gui.Chessboard;
 import kretowicz.gui.Tile;
 
@@ -20,10 +21,12 @@ public abstract class Figure {
     protected Tile tile;
     protected Chessboard chessboard;
     protected static String path = "C:\\Users\\Admin\\Desktop\\chess icons\\";
+    protected Engine engine;
 
-    public Figure(boolean color, Chessboard chessboard) {
+    public Figure(boolean color, Chessboard chessboard, Engine engine) {
         this.color = color;
         this.chessboard = chessboard;
+        this.engine = engine;
         picture = new JLabel();
 
         try {
@@ -48,10 +51,11 @@ public abstract class Figure {
             @Override
             public void mouseDragged(MouseEvent e) {
 
-                //System.out.println(e.getX() + " " + e.getY());
-                chessboard.setMovingFigure(tmp,e.getXOnScreen() - 710,e.getYOnScreen() - 110);
-                picture.setVisible(false);
-                chessboard.repaint();
+                if(engine.getTurn() == color) {
+                    chessboard.setMovingFigure(tmp, e.getXOnScreen() - 710, e.getYOnScreen() - 110);
+                    picture.setVisible(false);
+                    chessboard.repaint();
+                }
             }
 
             @Override
@@ -75,10 +79,17 @@ public abstract class Figure {
             public void mouseReleased(MouseEvent e) {
                 //System.out.println(tile.getMonitor().getLastTile().getXPos() + " " + tile.getMonitor().getLastTile().getYPos());
 
-                if(check(tile.getMonitor().getLastTile())){
+                if(engine.getTurn() == color && check(engine.getLastTile())){
                     int d = color ? -1 : 1;
                     tile.setFigure(null);
-                    chessboard.getTile(tile.getXPos()+d,tile.getYPos()).setFigure(tmp);
+                    engine.getLastTile().setFigure(tmp);
+
+                    engine.changeTurn();
+
+                    if(color)
+                        engine.negateFirstWhiteTurn();
+                    else
+                        engine.negateFirstBlackTurn();
                 }
 
                 picture.setVisible(true);

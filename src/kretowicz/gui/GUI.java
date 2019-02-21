@@ -1,5 +1,7 @@
 package kretowicz.gui;
 
+import kretowicz.engine.Engine;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +10,7 @@ public class GUI {
     private Chessboard chessboard;
     private Dimension screenSize;
     private JPanel backgroundPanel;
-    public GUI() {
+    public GUI(Engine engine) {
 
         // setting screen size
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -22,7 +24,7 @@ public class GUI {
         backgroundPanel.setBackground(Color.BLACK);
         frame.add(backgroundPanel);
 
-        chessboard = new Chessboard(screenSize);
+        chessboard = new Chessboard(screenSize, engine);
         backgroundPanel.add(chessboard);
     }
 

@@ -5,28 +5,41 @@ import kretowicz.gui.Chessboard;
 import kretowicz.gui.Tile;
 
 public class Engine {
-    Chessboard chessboard;
+    private Chessboard chessboard;
 
-    Pawn [] whitePawns;
-    Pawn [] blackPawns;
+    private Pawn [] whitePawns;
+    private Pawn [] blackPawns;
 
-    Knight [] whiteKnights;
-    Knight [] blackKnights;
+    private Knight [] whiteKnights;
+    private Knight [] blackKnights;
 
-    Rook [] whiteRooks;
-    Rook [] blackRooks;
+    private Rook [] whiteRooks;
+    private Rook [] blackRooks;
 
-    Bishop [] whiteBishops;
-    Bishop [] blackBishops;
+    private Bishop [] whiteBishops;
+    private Bishop [] blackBishops;
 
-    King whiteKing;
-    King blackKing;
+    private King whiteKing;
+    private King blackKing;
 
-    Queen whiteQueen;
-    Queen blackQueen;
+    private Queen whiteQueen;
+    private Queen blackQueen;
+
+    private boolean turn;
+    private boolean firstWhiteTurn;
+    private boolean firstBlackTurn;
+
+    private Tile lastTile;
 
 
-    public Engine(Chessboard chessboard) {
+    public Engine() {
+        turn = true;
+        firstWhiteTurn = true;
+        firstBlackTurn = true;
+
+    }
+
+    public void setChessboard(Chessboard chessboard) {
         this.chessboard = chessboard;
 
         whitePawns = new Pawn[8];
@@ -43,37 +56,38 @@ public class Engine {
 
 
         for(int i=0; i<8; i++)
-            whitePawns[i] = new Pawn(true, chessboard);
+            whitePawns[i] = new Pawn(true, chessboard, this);
 
         for(int i=0; i<8; i++)
-            blackPawns[i] = new Pawn(false, chessboard);
+            blackPawns[i] = new Pawn(false, chessboard, this);
 
-        whiteKnights[0] = new Knight(true, chessboard);
-        whiteKnights[1] = new Knight(true,chessboard);
+        whiteKnights[0] = new Knight(true, chessboard, this);
+        whiteKnights[1] = new Knight(true,chessboard, this);
 
-        blackKnights[0] = new Knight(false,chessboard);
-        blackKnights[1] = new Knight(false,chessboard);
+        blackKnights[0] = new Knight(false,chessboard, this);
+        blackKnights[1] = new Knight(false,chessboard, this);
 
-        whiteRooks[0] = new Rook(true,chessboard);
-        whiteRooks[1] = new Rook(true,chessboard);
+        whiteRooks[0] = new Rook(true,chessboard, this);
+        whiteRooks[1] = new Rook(true,chessboard, this);
 
-        blackRooks[0] = new Rook(false,chessboard);
-        blackRooks[1] = new Rook(false,chessboard);
+        blackRooks[0] = new Rook(false,chessboard, this);
+        blackRooks[1] = new Rook(false,chessboard, this);
 
-        whiteBishops[0] = new Bishop(true,chessboard);
-        whiteBishops[1] = new Bishop(true,chessboard);
+        whiteBishops[0] = new Bishop(true,chessboard, this);
+        whiteBishops[1] = new Bishop(true,chessboard, this);
 
-        blackBishops[0] = new Bishop(false,chessboard);
-        blackBishops[1] = new Bishop(false,chessboard);
+        blackBishops[0] = new Bishop(false,chessboard, this);
+        blackBishops[1] = new Bishop(false,chessboard, this);
 
-        whiteKing = new King(true,chessboard);
+        whiteKing = new King(true,chessboard, this);
 
-        blackKing = new King(false,chessboard);
+        blackKing = new King(false,chessboard, this);
 
-        whiteQueen = new Queen(true,chessboard);
+        whiteQueen = new Queen(true,chessboard, this);
 
-        blackQueen = new Queen(false,chessboard);
+        blackQueen = new Queen(false,chessboard, this);
     }
+
     public void startGame() {
 
         // placing pawns
@@ -148,5 +162,37 @@ public class Engine {
 
     public Queen getBlackQueen() {
         return blackQueen;
+    }
+
+    public boolean getTurn() {
+        return turn;
+    }
+
+    public void changeTurn() {
+        turn = !turn;
+    }
+
+    public Tile getLastTile() {
+        return lastTile;
+    }
+
+    public void setLastTile(Tile lastTile) {
+        this.lastTile = lastTile;
+    }
+
+    public boolean getFirstWhiteTurn() {
+        return this.firstWhiteTurn;
+    }
+
+    public void negateFirstWhiteTurn() {
+        firstWhiteTurn = false;
+    }
+
+    public boolean getFirstBlackTurn() {
+        return this.firstBlackTurn;
+    }
+
+    public void negateFirstBlackTurn() {
+        firstBlackTurn = false;
     }
 }
