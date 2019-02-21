@@ -111,52 +111,9 @@ public class Engine {
         chessboard.getTile(7,4).setFigure(whiteKing);
     }
 
-    public Pawn[] getWhitePawns() {
-        return whitePawns;
-    }
 
-    public Pawn[] getBlackPawns() {
-        return blackPawns;
-    }
-
-    public Knight[] getWhiteKnights() {
-        return whiteKnights;
-    }
-
-    public Knight[] getBlackKnights() {
-        return blackKnights;
-    }
-
-    public Rook[] getWhiteRooks() {
-        return whiteRooks;
-    }
-
-    public Rook[] getBlackRooks() {
-        return blackRooks;
-    }
-
-    public Bishop[] getWhiteBishops() {
-        return whiteBishops;
-    }
-
-    public Bishop[] getBlackBishops() {
-        return blackBishops;
-    }
-
-    public King getWhiteKing() {
-        return whiteKing;
-    }
-
-    public King getBlackKing() {
-        return blackKing;
-    }
-
-    public Queen getWhiteQueen() {
-        return whiteQueen;
-    }
-
-    public Queen getBlackQueen() {
-        return blackQueen;
+    public King getKing(boolean color) {
+        return color ? whiteKing : blackKing;
     }
 
     public boolean getTurn() {
@@ -173,6 +130,124 @@ public class Engine {
 
     public void setLastTile(Tile lastTile) {
         this.lastTile = lastTile;
+    }
+
+    public boolean check(boolean color, Tile tile) {
+        int x = tile.getXPos();
+        int y = tile.getYPos();
+
+        Figure tmp;
+
+        ////////////////////////////////////
+
+        for(int i = x-1; i>=0; i--) {
+
+            tmp = chessboard.getTile(i,y).getFigure();
+            if(tmp != null) {
+                if(tmp.getColor() != color &&
+                        (tmp instanceof Rook ||
+                        tmp instanceof Queen))
+                    return true;
+                break;
+            }
+        }
+        System.out.println(1);
+        for(int i = x+1; i<8; i++) {
+
+            tmp = chessboard.getTile(i,y).getFigure();
+            if(tmp != null) {
+                if(tmp.getColor() != color &&
+                        (tmp instanceof Rook ||
+                                tmp instanceof Queen))
+                    return true;
+                break;
+            }
+        }
+        System.out.println(2);
+        //////////////////////////////
+
+        for(int i = y-1; i>=0; i--) {
+
+            tmp = chessboard.getTile(x,i).getFigure();
+            if(tmp != null) {
+                if(tmp.getColor() != color &&
+                        (tmp instanceof Rook ||
+                                tmp instanceof Queen))
+                    return true;
+                break;
+            }
+        }
+        System.out.println(3);
+        for(int i = y+1; i<8; i++) {
+
+            tmp = chessboard.getTile(x,i).getFigure();
+            if(tmp != null) {
+                if(tmp.getColor() != color &&
+                        (tmp instanceof Rook ||
+                                tmp instanceof Queen))
+                    return true;
+                break;
+            }
+        }
+        System.out.println(4);
+        ////////////////////////////////
+
+        if(skew(color,tile,1,1) ||
+                skew(color,tile,1,-1) ||
+                skew(color,tile,-1,1) ||
+                skew(color,tile,-1,-1))
+            return true;
+
+        System.out.println(5);
+        /////////////////////////////////////
+
+        if(kingAlert(color,tile,1,0) ||
+                kingAlert(color,tile,-1,0) ||
+                kingAlert(color,tile,0,1) ||
+                kingAlert(color,tile,0,-1))
+            return true;
+
+        System.out.println(6);
+        /////////////////////////////////////////
+
+        return false;
+
+    }
+
+    private boolean skew(boolean color, Tile tile, int di, int dj) {
+        int x = tile.getXPos();
+        int y = tile.getYPos();
+
+        Figure tmp;
+
+        for(int i = x+di, j = y + dj; i>=0 && i<8 && j >=0 && j<8; i+=di, j+=dj) {
+
+            tmp = chessboard.getTile(i,j).getFigure();
+            if(tmp != null) {
+                if(tmp.getColor() != color &&
+                        (tmp instanceof Bishop ||
+                                tmp instanceof Queen))
+                    return true;
+                break;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean kingAlert(boolean color, Tile tile, int di, int dj) {
+        int x = tile.getXPos();
+        int y = tile.getYPos();
+
+        if(x+di<0 || x+di>=8 || y+dj<0 || y+dj >=8)
+            return false;
+
+        Figure tmp = chessboard.getTile(x+di,y+dj).getFigure();
+        if(tmp != null &&
+                tmp.getColor() != color && tmp instanceof King)
+            return true;
+
+        return false;
     }
 
 }

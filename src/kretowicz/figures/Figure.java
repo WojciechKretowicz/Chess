@@ -80,8 +80,10 @@ public abstract class Figure {
                 //System.out.println(tile.getMonitor().getLastTile().getXPos() + " " + tile.getMonitor().getLastTile().getYPos());
 
                 if(engine.getTurn() == color && check()){
+
                     int d = color ? -1 : 1;
                     tile.setFigure(null);
+
                     engine.getLastTile().setFigure(tmp);
 
                     engine.changeTurn();
@@ -92,6 +94,7 @@ public abstract class Figure {
 
                 chessboard.setMovingFigure(null,0,0);
                 chessboard.repaint();
+
             }
 
             @Override
@@ -111,11 +114,19 @@ public abstract class Figure {
         return picture;
     }
 
+    public Tile getTile() {
+        return tile;
+    }
+
     public void setTile(Tile tile) {
         this.tile = tile;
     }
 
     protected boolean check() {
         return false;
+    }
+
+    public boolean getColor(){
+        return color;
     }
 }
