@@ -77,16 +77,36 @@ public abstract class Figure {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                //System.out.println(tile.getMonitor().getLastTile().getXPos() + " " + tile.getMonitor().getLastTile().getYPos());
+                Tile lastTile = engine.getLastTile();
+                Tile mem = tile;
+                boolean firstMove = false;
+                if(tmp instanceof Pawn) {
+                    firstMove = ((Pawn) tmp).getFirstMove();
+                }
 
                 if(engine.getTurn() == color && check()){
 
-                    int d = color ? -1 : 1;
+
+
+
+
                     tile.setFigure(null);
 
-                    engine.getLastTile().setFigure(tmp);
+                    lastTile.setFigure(tmp);
 
-                    engine.changeTurn();
+                    if(engine.check(color,engine.getKing(color).getTile())) {
+                        mem.goBack();
+                        lastTile.goBack();
+
+                        if((tmp instanceof Pawn) && firstMove) {
+                            ((Pawn) tmp).setFirstMove(true);
+                        }
+                    }
+                    else {
+                        engine.changeTurn();
+                        tile.showFigure();
+                        lastTile.showFigure();
+                    }
 
                 }
 
@@ -128,5 +148,12 @@ public abstract class Figure {
 
     public boolean getColor(){
         return color;
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        result += this.getClass().getSimpleName() + " " + tile + " " + tile.getXPos() + " " + tile.getYPos();
+        return result;
     }
 }

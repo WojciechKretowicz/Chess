@@ -88,27 +88,45 @@ public class Engine {
         // placing pawns
         for(int i=0; i<8; i++) {
             chessboard.getTile(6,i).setFigure(whitePawns[i]);
+            chessboard.getTile(6,i).showFigure();
 
             chessboard.getTile(1,i).setFigure(blackPawns[i]);
+            chessboard.getTile(1,i).showFigure();
         }
 
         chessboard.getTile(0,0).setFigure(blackRooks[0]);
+        chessboard.getTile(0,0).showFigure();
         chessboard.getTile(0,7).setFigure(blackRooks[1]);
+        chessboard.getTile(0,7).showFigure();
         chessboard.getTile(0,1).setFigure(blackKnights[0]);
+        chessboard.getTile(0,1).showFigure();
         chessboard.getTile(0,6).setFigure(blackKnights[1]);
+        chessboard.getTile(0,6).showFigure();
         chessboard.getTile(0,2).setFigure(blackBishops[0]);
+        chessboard.getTile(0,2).showFigure();
         chessboard.getTile(0,5).setFigure(blackBishops[1]);
+        chessboard.getTile(0,5).showFigure();
         chessboard.getTile(0,3).setFigure(blackQueen);
+        chessboard.getTile(0,3).showFigure();
         chessboard.getTile(0,4).setFigure(blackKing);
+        chessboard.getTile(0,4).showFigure();
 
         chessboard.getTile(7,0).setFigure(whiteRooks[0]);
+        chessboard.getTile(7,0).showFigure();
         chessboard.getTile(7,7).setFigure(whiteRooks[1]);
+        chessboard.getTile(7,7).showFigure();
         chessboard.getTile(7,1).setFigure(whiteKnights[0]);
+        chessboard.getTile(7,1).showFigure();
         chessboard.getTile(7,6).setFigure(whiteKnights[1]);
+        chessboard.getTile(7,6).showFigure();
         chessboard.getTile(7,2).setFigure(whiteBishops[0]);
+        chessboard.getTile(7,2).showFigure();
         chessboard.getTile(7,5).setFigure(whiteBishops[1]);
+        chessboard.getTile(7,5).showFigure();
         chessboard.getTile(7,3).setFigure(whiteQueen);
+        chessboard.getTile(7,3).showFigure();
         chessboard.getTile(7,4).setFigure(whiteKing);
+        chessboard.getTile(7,4).showFigure();
     }
 
 
@@ -151,7 +169,7 @@ public class Engine {
                 break;
             }
         }
-        System.out.println(1);
+        //System.out.println(1);
         for(int i = x+1; i<8; i++) {
 
             tmp = chessboard.getTile(i,y).getFigure();
@@ -163,7 +181,7 @@ public class Engine {
                 break;
             }
         }
-        System.out.println(2);
+        //System.out.println(2);
         //////////////////////////////
 
         for(int i = y-1; i>=0; i--) {
@@ -177,7 +195,7 @@ public class Engine {
                 break;
             }
         }
-        System.out.println(3);
+        //System.out.println(3);
         for(int i = y+1; i<8; i++) {
 
             tmp = chessboard.getTile(x,i).getFigure();
@@ -189,7 +207,7 @@ public class Engine {
                 break;
             }
         }
-        System.out.println(4);
+        //System.out.println(4);
         ////////////////////////////////
 
         if(skew(color,tile,1,1) ||
@@ -198,7 +216,7 @@ public class Engine {
                 skew(color,tile,-1,-1))
             return true;
 
-        System.out.println(5);
+        //System.out.println(5);
         /////////////////////////////////////
 
         if(kingAlert(color,tile,1,0) ||
@@ -207,7 +225,7 @@ public class Engine {
                 kingAlert(color,tile,0,-1))
             return true;
 
-        System.out.println(6);
+        //System.out.println(6);
         /////////////////////////////////////////
 
         return false;
@@ -226,8 +244,10 @@ public class Engine {
             if(tmp != null) {
                 if(tmp.getColor() != color &&
                         (tmp instanceof Bishop ||
-                                tmp instanceof Queen))
+                                tmp instanceof Queen)) {
+                    System.out.println("    " + i + " " + j);
                     return true;
+                }
                 break;
             }
         }

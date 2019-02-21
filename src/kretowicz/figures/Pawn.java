@@ -71,5 +71,13 @@ public class Pawn extends Figure {
         return false;
     }
 
+    public void setFirstMove(boolean firstMove) {
+        this.firstMove = firstMove;
+    }
+
+    public boolean getFirstMove() {
+        return firstMove;
+    }
+
 
 }

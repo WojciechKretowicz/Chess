@@ -9,9 +9,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Tile extends JPanel {
-    private Figure figure;
+    private Figure figure, checkFigure;
     private Color color;
     private int x,y;
+
+    private boolean additionalFigure;
 
     private Engine engine;
 
@@ -19,6 +21,8 @@ public class Tile extends JPanel {
         this.color = color;
         this.x = x;
         this.y = y;
+
+        checkFigure = null;
 
         this.engine = engine;
 
@@ -62,16 +66,30 @@ public class Tile extends JPanel {
 
     public void setFigure(Figure figure) {
 
-        if(this.figure != null)
-            remove(this.figure.getPicture());
-
+        checkFigure = this.figure;
         if(figure != null) {
-            add(figure.getPicture());
             figure.setTile(this);
         }
 
         this.figure = figure;
+    }
+
+    public void showFigure() {
+        if(checkFigure != null) {
+            remove(checkFigure.getPicture());
+        }
+        if(figure != null) {
+            add(figure.getPicture());
+        }
+
         repaint();
+    }
+
+    public void goBack() {
+        figure = checkFigure;
+        if(figure != null)
+            figure.setTile(this);
+        checkFigure = null;
     }
 
     public Figure getFigure() {
@@ -95,4 +113,5 @@ public class Tile extends JPanel {
     public Engine getEngine() {
         return engine;
     }
+
 }
