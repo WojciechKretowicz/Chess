@@ -115,7 +115,7 @@ public abstract class Figure {
         this.tile = tile;
     }
 
-    public boolean check() {
+    protected boolean check() {
         return false;
     }
 }

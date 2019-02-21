@@ -14,7 +14,7 @@ public class Pawn extends Figure {
     }
 
     @Override
-    public boolean check() {
+    protected boolean check() {
         boolean result =
                 moveForward() ||
                 moveForwardLong() ||
@@ -26,7 +26,7 @@ public class Pawn extends Figure {
         return result;
     }
 
-    public boolean moveForward() {
+    private boolean moveForward() {
         int d = color ? -1 : 1;
         if(tile.getXPos() == engine.getLastTile().getXPos() - d && tile.getYPos() == engine.getLastTile().getYPos() &&
                 engine.getLastTile().getFigure() == null)
@@ -34,7 +34,7 @@ public class Pawn extends Figure {
         return false;
     }
 
-    public boolean moveForwardLong() {
+    private boolean moveForwardLong() {
         int d = color ? -1 : 1;
 
         if(!firstMove)
@@ -52,19 +52,21 @@ public class Pawn extends Figure {
         return false;
     }
 
-    public boolean moveForwardRight() {
+    private boolean moveForwardRight() {
         int d = color ? -1 : 1;
         if(tile.getXPos() == engine.getLastTile().getXPos() - d && tile.getYPos() == engine.getLastTile().getYPos() + d &&
-                engine.getLastTile().getFigure()!= null) {
+                engine.getLastTile().getFigure()!= null &&
+                engine.getLastTile().getFigure().color != color) {
             return true;
         }
         return false;
     }
 
-    public boolean moveForwardLeft() {
+    private boolean moveForwardLeft() {
         int d = color ? -1 : 1;
         if(tile.getXPos() == engine.getLastTile().getXPos() - d && tile.getYPos() == engine.getLastTile().getYPos() - d &&
-                engine.getLastTile().getFigure()!= null)
+                engine.getLastTile().getFigure()!= null &&
+                engine.getLastTile().getFigure().color != color)
             return true;
         return false;
     }

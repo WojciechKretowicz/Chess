@@ -16,10 +16,62 @@ public class Rook extends Figure {
 
     }
 
-    public void moveVertically(int n) {
-        if(color)
-            n=-n;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+n,tile.getYPos()).setFigure(this);
+    @Override
+    protected boolean check() {
+        boolean result =
+                moveVertically() ||
+                moveHorizontally();
+
+        return result;
+    }
+
+    private boolean moveVertically() {
+        if(tile.getYPos() != engine.getLastTile().getYPos())
+            return false;
+
+        if(tile.getXPos() == engine.getLastTile().getXPos())
+            return false;
+
+        if(tile.getXPos() < engine.getLastTile().getXPos()) {
+            for (int i = tile.getXPos() + 1; i < engine.getLastTile().getXPos(); i++)
+                if (chessboard.getTile(i, tile.getYPos()).getFigure() != null)
+                    return false;
+        }
+        else {
+            for (int i = tile.getXPos() - 1; i > engine.getLastTile().getXPos(); i--)
+                if (chessboard.getTile(i, tile.getYPos()).getFigure() != null)
+                    return false;
+        }
+
+        if(engine.getLastTile().getFigure() != null &&
+                engine.getLastTile().getFigure().color == color)
+            return false;
+
+        return true;
+    }
+
+    private boolean moveHorizontally() {
+        if(tile.getXPos() != engine.getLastTile().getXPos())
+            return false;
+
+        if(tile.getYPos() == engine.getLastTile().getYPos())
+            return false;
+
+        if(tile.getYPos() < engine.getLastTile().getYPos()) {
+            for (int i = tile.getYPos() + 1; i < engine.getLastTile().getYPos(); i++)
+                if (chessboard.getTile(tile.getXPos(), i).getFigure() != null)
+                    return false;
+        }
+        else {
+            for (int i = tile.getYPos() - 1; i > engine.getLastTile().getYPos(); i--)
+                if (chessboard.getTile(tile.getXPos(), i).getFigure() != null)
+                    return false;
+        }
+
+        if(engine.getLastTile().getFigure() != null &&
+                engine.getLastTile().getFigure().color == color)
+            return false;
+
+        return true;
     }
 }

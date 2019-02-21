@@ -19,52 +19,20 @@ public class King extends Figure {
 
     }
 
-    public void moveForward() {
-        int d=1;
-        if(color)
-            d=-1;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()).setFigure(this);
-    }
+    @Override
+    protected boolean check() {
+        int dVertically =
+                Math.abs(tile.getXPos() - engine.getLastTile().getXPos());
+        int dHorizontally =
+                Math.abs(tile.getYPos() - engine.getLastTile().getYPos());
 
-    public void moveBack() {
-        int d=-1;
-        if(color)
-            d=1;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()).setFigure(this);
-    }
+        if(dVertically <= 1 && dHorizontally <= 1 && dHorizontally + dVertically != 0) {
+            if(engine.getLastTile().getFigure() != null &&
+                    engine.getLastTile().getFigure().color == color)
+                return false;
+            return true;
+        }
 
-    public void moveForwardRight() {
-        int d=1;
-        if(color)
-            d=-1;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()-d).setFigure(this);
+        return false;
     }
-
-    public void moveForwardLeft() {
-        int d=1;
-        if(color)
-            d=-1;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()+d).setFigure(this);
-    }
-
-    public void moveBackRight(){
-        int d=-1;
-        if(color)
-            d=1;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()-d).setFigure(this);
-    }
-
-    public void moveBackLeft() {
-        int d=-1;
-        if(color)
-            d=1;
-        tile.setFigure(null);
-        chessboard.getTile(tile.getXPos()+d,tile.getYPos()+d).setFigure(this);
-    }
-
 }
