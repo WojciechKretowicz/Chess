@@ -114,4 +114,9 @@ public class Tile extends JPanel {
         return engine;
     }
 
+    public void returnColor() {
+        setBackground(color);
+        repaint();
+    }
+
 }

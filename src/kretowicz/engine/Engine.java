@@ -29,9 +29,14 @@ public class Engine {
 
     private Tile lastTile;
 
+    private boolean whiteKingCheck;
+    private boolean blackKingCheck;
+
 
     public Engine() {
         turn = true;
+        whiteKingCheck = false;
+        blackKingCheck = false;
     }
 
     public void setChessboard(Chessboard chessboard) {
@@ -245,7 +250,6 @@ public class Engine {
                 if(tmp.getColor() != color &&
                         (tmp instanceof Bishop ||
                                 tmp instanceof Queen)) {
-                    System.out.println("    " + i + " " + j);
                     return true;
                 }
                 break;
@@ -269,5 +273,21 @@ public class Engine {
 
         return false;
     }
+
+    public void changeKingCheck(boolean color) {
+        if(color)
+            this.whiteKingCheck = !this.whiteKingCheck;
+        else
+            this.blackKingCheck = !this.blackKingCheck;
+    }
+
+    public boolean getKingCheck(boolean color) {
+        if(color)
+            return this.whiteKingCheck;
+        else
+            return this.blackKingCheck;
+    }
+
+
 
 }

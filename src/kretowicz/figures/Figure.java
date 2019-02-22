@@ -106,6 +106,16 @@ public abstract class Figure {
                         engine.changeTurn();
                         tile.showFigure();
                         lastTile.showFigure();
+
+
+                        if(engine.check(!color, engine.getKing(!color).getTile())) {
+                            engine.getKing(!color).getTile().setBackground(Color.RED);
+                            engine.changeKingCheck(!color);
+                        }
+
+                        engine.getKing(color).getTile().returnColor();
+
+
                     }
 
                 }
