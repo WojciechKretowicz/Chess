@@ -3,13 +3,6 @@ package kretowicz.figures;
 import kretowicz.engine.Engine;
 import kretowicz.gui.Chessboard;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 public class Rook extends Figure {
     public Rook(boolean color, Chessboard chessboard, Engine engine) {
         super(color, chessboard, engine);
@@ -20,30 +13,29 @@ public class Rook extends Figure {
     protected boolean check() {
         boolean result =
                 moveVertically() ||
-                moveHorizontally();
+                        moveHorizontally();
 
         return result;
     }
 
     private boolean moveVertically() {
-        if(tile.getYPos() != engine.getLastTile().getYPos())
+        if (tile.getYPos() != engine.getLastTile().getYPos())
             return false;
 
-        if(tile.getXPos() == engine.getLastTile().getXPos())
+        if (tile.getXPos() == engine.getLastTile().getXPos())
             return false;
 
-        if(tile.getXPos() < engine.getLastTile().getXPos()) {
+        if (tile.getXPos() < engine.getLastTile().getXPos()) {
             for (int i = tile.getXPos() + 1; i < engine.getLastTile().getXPos(); i++)
                 if (chessboard.getTile(i, tile.getYPos()).getFigure() != null)
                     return false;
-        }
-        else {
+        } else {
             for (int i = tile.getXPos() - 1; i > engine.getLastTile().getXPos(); i--)
                 if (chessboard.getTile(i, tile.getYPos()).getFigure() != null)
                     return false;
         }
 
-        if(engine.getLastTile().getFigure() != null &&
+        if (engine.getLastTile().getFigure() != null &&
                 engine.getLastTile().getFigure().color == color)
             return false;
 
@@ -51,24 +43,23 @@ public class Rook extends Figure {
     }
 
     private boolean moveHorizontally() {
-        if(tile.getXPos() != engine.getLastTile().getXPos())
+        if (tile.getXPos() != engine.getLastTile().getXPos())
             return false;
 
-        if(tile.getYPos() == engine.getLastTile().getYPos())
+        if (tile.getYPos() == engine.getLastTile().getYPos())
             return false;
 
-        if(tile.getYPos() < engine.getLastTile().getYPos()) {
+        if (tile.getYPos() < engine.getLastTile().getYPos()) {
             for (int i = tile.getYPos() + 1; i < engine.getLastTile().getYPos(); i++)
                 if (chessboard.getTile(tile.getXPos(), i).getFigure() != null)
                     return false;
-        }
-        else {
+        } else {
             for (int i = tile.getYPos() - 1; i > engine.getLastTile().getYPos(); i--)
                 if (chessboard.getTile(tile.getXPos(), i).getFigure() != null)
                     return false;
         }
 
-        if(engine.getLastTile().getFigure() != null &&
+        if (engine.getLastTile().getFigure() != null &&
                 engine.getLastTile().getFigure().color == color)
             return false;
 

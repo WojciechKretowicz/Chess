@@ -2,7 +2,6 @@ package kretowicz.figures;
 
 import kretowicz.engine.Engine;
 import kretowicz.gui.Chessboard;
-import kretowicz.gui.Tile;
 
 
 public class Bishop extends Figure {
@@ -13,24 +12,24 @@ public class Bishop extends Figure {
 
     @Override
     protected boolean check() {
-        if(this == engine.getLastTile().getFigure())
+        if (this == engine.getLastTile().getFigure())
             return false;
 
-        if(Math.abs(tile.getXPos() - engine.getLastTile().getXPos()) !=
+        if (Math.abs(tile.getXPos() - engine.getLastTile().getXPos()) !=
                 Math.abs(tile.getYPos() - engine.getLastTile().getYPos()))
             return false;
 
 
         //////////////////////////////
 
-        int di,dj;
+        int di, dj;
 
-        if(tile.getXPos() > engine.getLastTile().getXPos())
+        if (tile.getXPos() > engine.getLastTile().getXPos())
             di = -1;
         else
             di = 1;
 
-        if(tile.getYPos() > engine.getLastTile().getYPos())
+        if (tile.getYPos() > engine.getLastTile().getYPos())
             dj = -1;
         else
             dj = 1;
@@ -42,16 +41,16 @@ public class Bishop extends Figure {
             return true;
         }
 
-        for(int k=0; k<Math.abs(tile.getXPos() - engine.getLastTile().getXPos()); k ++) {
+        for (int k = 0; k < Math.abs(tile.getXPos() - engine.getLastTile().getXPos()); k++) {
             int i = tile.getXPos() + di, j = tile.getYPos() + dj;
             if (chessboard.getTile(i, j).getFigure() != null)
                 return false;
-            i+=di;
-            j+=dj;
+            i += di;
+            j += dj;
         }
 
 
-        if(engine.getLastTile().getFigure() != null &&
+        if (engine.getLastTile().getFigure() != null &&
                 engine.getLastTile().getFigure().color == color)
             return false;
 

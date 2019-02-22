@@ -15,12 +15,12 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class Figure {
-    protected JLabel picture;
+    protected static String path = "C:\\Users\\Admin\\Desktop\\chess icons\\";
     public Image img;
+    protected JLabel picture;
     protected boolean color;
     protected Tile tile;
     protected Chessboard chessboard;
-    protected static String path = "C:\\Users\\Admin\\Desktop\\chess icons\\";
     protected Engine engine;
 
     public Figure(boolean color, Chessboard chessboard, Engine engine) {
@@ -31,7 +31,7 @@ public abstract class Figure {
 
         try {
             BufferedImage pic;
-            if(color)
+            if (color)
                 pic = ImageIO.read(new File(path + "white " + this.getClass().getSimpleName() + ".png"));
             else
                 pic = ImageIO.read(new File(path + "black " + this.getClass().getSimpleName() + ".png"));
@@ -51,7 +51,7 @@ public abstract class Figure {
             @Override
             public void mouseDragged(MouseEvent e) {
 
-                if(engine.getTurn() == color) {
+                if (engine.getTurn() == color) {
                     chessboard.setMovingFigure(tmp, e.getXOnScreen() - 710, e.getYOnScreen() - 110);
                     picture.setVisible(false);
                     chessboard.repaint();
@@ -80,40 +80,37 @@ public abstract class Figure {
                 Tile lastTile = engine.getLastTile();
                 Tile mem = tile;
                 boolean firstMove = false;
-                if(tmp instanceof Pawn) {
+                if (tmp instanceof Pawn) {
                     firstMove = ((Pawn) tmp).getFirstMove();
                 }
 
-                if(engine.getTurn() == color && check()){
+                if (engine.getTurn() == color && check()) {
 
-
-
-
+                    Tile kingTile = engine.getKing(color).getTile();
 
                     tile.setFigure(null);
 
                     lastTile.setFigure(tmp);
 
-                    if(engine.check(color,engine.getKing(color).getTile())) {
+                    if (engine.check(color, engine.getKing(color).getTile())) {
                         mem.goBack();
                         lastTile.goBack();
 
-                        if((tmp instanceof Pawn) && firstMove) {
+                        if ((tmp instanceof Pawn) && firstMove) {
                             ((Pawn) tmp).setFirstMove(true);
                         }
-                    }
-                    else {
+                    } else {
                         engine.changeTurn();
                         tile.showFigure();
                         lastTile.showFigure();
 
 
-                        if(engine.check(!color, engine.getKing(!color).getTile())) {
+                        if (engine.check(!color, engine.getKing(!color).getTile())) {
                             engine.getKing(!color).getTile().setBackground(Color.RED);
                             engine.changeKingCheck(!color);
                         }
 
-                        engine.getKing(color).getTile().returnColor();
+                        kingTile.returnColor();
 
 
                     }
@@ -122,7 +119,7 @@ public abstract class Figure {
 
                 picture.setVisible(true);
 
-                chessboard.setMovingFigure(null,0,0);
+                chessboard.setMovingFigure(null, 0, 0);
                 chessboard.repaint();
 
             }
@@ -156,7 +153,7 @@ public abstract class Figure {
         return false;
     }
 
-    public boolean getColor(){
+    public boolean getColor() {
         return color;
     }
 

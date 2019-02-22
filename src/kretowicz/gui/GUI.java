@@ -10,6 +10,7 @@ public class GUI {
     private Chessboard chessboard;
     private Dimension screenSize;
     private JPanel backgroundPanel;
+
     public GUI(Engine engine) {
 
         // setting screen size

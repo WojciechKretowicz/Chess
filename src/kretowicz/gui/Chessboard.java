@@ -8,22 +8,21 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Chessboard extends JPanel {
-    private Tile [][] tiles;
+    int x, y;
+    private Tile[][] tiles;
     private Dimension screenSize;
-
     private Figure movingFigure;
-    int x,y;
 
     public Chessboard(Dimension screenSize, Engine engine) {
 
-        setMaximumSize(new Dimension(screenSize.width/2, screenSize.width/2));
+        setMaximumSize(new Dimension(screenSize.width / 2, screenSize.width / 2));
 
-        setLayout(new GridLayout(8,8));
+        setLayout(new GridLayout(8, 8));
 
         tiles = new Tile[8][8];
         this.screenSize = screenSize;
         setBackground(Color.GRAY);
-        for(int i=0; i<8; i++) {
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((i + j) % 2 == 0)
                     tiles[i][j] = new Tile(Color.WHITE, i, j, engine);
@@ -48,8 +47,8 @@ public class Chessboard extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
-        if(movingFigure != null) {
-            g.drawImage(movingFigure.img, x , y, null);
+        if (movingFigure != null) {
+            g.drawImage(movingFigure.img, x, y, null);
         }
     }
 }
